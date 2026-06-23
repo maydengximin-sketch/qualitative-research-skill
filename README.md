@@ -41,12 +41,12 @@ qualitative-research/
 ### 方式一：作为 Claude Code 个人技能
 ```bash
 # 克隆到 Claude Code 的 skills 目录
-git clone https://github.com/<your-name>/qualitative-research-skill.git \
+git clone https://github.com/maydengximin-sketch/qualitative-research-skill.git \
   ~/.claude/skills/qualitative-research
 ```
 Windows（PowerShell）：
 ```powershell
-git clone https://github.com/<your-name>/qualitative-research-skill.git "$env:USERPROFILE\.claude\skills\qualitative-research"
+git clone https://github.com/maydengximin-sketch/qualitative-research-skill.git "$env:USERPROFILE\.claude\skills\qualitative-research"
 ```
 之后在 Claude Code 里直接提问即可，例如：
 - "帮我给'县域中学生短视频使用'设计一份半结构访谈提纲"
