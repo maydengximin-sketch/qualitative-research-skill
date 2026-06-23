@@ -25,6 +25,10 @@ qualitative-research/
 │   ├── 05-coding-thematic.md      # Braun & Clarke 六步主题分析·内容分析
 │   ├── 06-reliability-validity.md # Cohen's Kappa·NVivo编码比较·饱和·信实度
 │   └── 07-reporting.md            # COREQ/SRQR·引语呈现·章节写作
+├── diagrams/                      # 流程图与模型图（Mermaid，GitHub 直接渲染）
+│   ├── grounded-theory.md         # 扎根理论编码流程·三级编码漏斗·模型结构模板
+│   ├── thematic-analysis.md       # 主题分析六步·编码→主题层级·方法决策图
+│   └── index.html                 # 离线渲染页，双击查看全部流程图并截图
 ├── templates/                     # 即用模板
 │   ├── interview-guide-template.md   # 半结构访谈提纲
 │   ├── codebook-template.md          # 编码簿
@@ -57,6 +61,9 @@ git clone https://github.com/maydengximin-sketch/qualitative-research-skill.git 
 
 ### 方式二：只用 Kappa 计算器
 直接双击 `tools/kappa-calculator/index.html`，离线可用。支持四种输入：四格数值粘贴、逐条编码、NVivo 四格百分比、手动混淆矩阵，自动生成可写进报告的文字。
+
+### 方式三：直接取用流程图
+`diagrams/` 下是扎根理论、主题分析的全套流程图与模型图（Mermaid 编写，GitHub 页面直接渲染）。双击 `diagrams/index.html` 可离线查看并截图，用于论文配图或科普分享；把对应 Mermaid 代码替换成你自己的范畴/主题即可复用。
 
 ## 🧭 设计原则
 

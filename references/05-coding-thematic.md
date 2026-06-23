@@ -1,6 +1,8 @@
 # 05 · 主题分析与内容分析
 
 > 当目标是**系统提炼一批文本的模式/主题**而非建构理论时，用主题分析（Thematic Analysis, TA）或内容分析。它们更灵活、门槛更低，但同样要做得严谨、可追溯。
+>
+> 📊 **配套流程图**：见 [`../diagrams/thematic-analysis.md`](../diagrams/thematic-analysis.md)（六步流程、编码→主题层级、四种取向、方法决策图）。
 
 ## 一、Braun & Clarke 反思性主题分析（Reflexive TA）六步
 

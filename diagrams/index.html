@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>质性研究流程图 · 扎根理论 & 主题分析</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root{
+      --bg:#f5f7fb; --panel:#fff; --ink:#18212f; --muted:#647084;
+      --line:#d8deea; --blue:#2563eb; --green:#138a5b;
+      font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;color:var(--ink);background:var(--bg)}
+    header{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;padding:34px 20px;text-align:center}
+    header h1{margin:0 0 8px;font-size:24px}
+    header p{margin:0;opacity:.9;font-size:14px}
+    .wrap{max-width:1080px;margin:0 auto;padding:24px 16px 80px}
+    .tabs{display:flex;gap:8px;justify-content:center;margin:24px 0 8px;flex-wrap:wrap}
+    .tab{padding:8px 18px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted)}
+    .tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;margin:18px 0;box-shadow:0 10px 30px rgba(34,45,70,.06)}
+    .card h2{margin:0 0 4px;font-size:18px}
+    .card .desc{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.6}
+    .mermaid{display:flex;justify-content:center;overflow:auto}
+    .group{display:none}
+    .group.show{display:block}
+    .tip{background:#fff8e6;border:1px solid #f0d894;border-radius:10px;padding:10px 14px;color:#8a6d1f;font-size:13px;margin-top:12px}
+    footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+    .hint{text-align:center;color:var(--muted);font-size:13px;margin-top:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>质性研究流程图集</h1>
+    <p>扎根理论 · 主题分析 — 可直接截图用于论文 / 小红书科普</p>
+  </header>
+  <div class="wrap">
+    <div class="tabs">
+      <div class="tab active" data-g="gt">扎根理论</div>
+      <div class="tab" data-g="ta">主题分析</div>
+    </div>
+    <p class="hint">截图建议：浏览器缩放到合适大小，对单张卡片右键"截图所选"或用系统截图工具。</p>
+
+    <!-- 扎根理论 -->
+    <div class="group show" id="gt">
+      <div class="card">
+        <h2>图1 · 扎根理论操作循环（理论抽样 → 饱和）</h2>
+        <p class="desc">扎根理论区别于一般编码的核心：收集与分析交替，由浮现的范畴驱动下一轮抽样，直到理论饱和。</p>
+        <div class="mermaid">
+flowchart TD
+    A[确定研究问题<br/>过程/机制取向] --> B[初始抽样<br/>目的抽样起步]
+    B --> C[收集数据<br/>访谈/观察/文档]
+    C --> D[开放编码<br/>逐行贴标签·实境码]
+    D --> E[持续比较<br/>事件↔事件 码↔码]
+    E --> F[主轴编码<br/>归并范畴·建立关系]
+    F --> G[写理论备忘录]
+    G --> H{理论饱和?<br/>不再产生新范畴/属性}
+    H -- 否 --> I[理论抽样<br/>针对范畴空白补数据]
+    I --> C
+    H -- 是 --> J[选择性编码<br/>确定核心范畴]
+    J --> K[提炼故事线·构建理论]
+    K --> L[输出概念模型图 + 命题]
+    style H fill:#fff3cd,stroke:#b7791f
+    style L fill:#d1f0e0,stroke:#138a5b
+    style G fill:#e7efff,stroke:#2563eb
+        </div>
+      </div>
+      <div class="card">
+        <h2>图2 · 三级编码漏斗（数据 → 理论）</h2>
+        <p class="desc">从贴近数据的初始概念，逐层抽象到核心范畴与理论。</p>
+        <div class="mermaid">
+flowchart TD
+    subgraph L1[开放编码 · 贴近数据]
+        a1[原始语句1] --> c1[初始概念]
+        a2[原始语句2] --> c1
+        a3[原始语句3] --> c2[初始概念]
+        a4[原始语句4] --> c3[实境码]
+    end
+    subgraph L2[主轴编码 · 建立关系]
+        c1 --> cat1[范畴 A]
+        c2 --> cat1
+        c3 --> cat2[范畴 B]
+    end
+    subgraph L3[选择性编码 · 整合理论]
+        cat1 --> core[核心范畴]
+        cat2 --> core
+        core --> theory[扎根理论/模型]
+    end
+    style core fill:#fff3cd,stroke:#b7791f
+    style theory fill:#d1f0e0,stroke:#138a5b
+        </div>
+      </div>
+      <div class="card">
+        <h2>图3 · 三流派编码语言对照</h2>
+        <p class="desc">标题与正文必须用同一流派，切忌混用。</p>
+        <div class="mermaid">
+flowchart LR
+    subgraph G[经典 Glaser]
+        g1[实质编码] --> g2[理论编码]
+    end
+    subgraph S[程序化 Strauss & Corbin]
+        s1[开放编码] --> s2[主轴编码] --> s3[选择性编码]
+    end
+    subgraph C[建构主义 Charmaz]
+        c1[初始编码] --> c2[聚焦编码] --> c3[理论编码]
+    end
+        </div>
+      </div>
+      <div class="card">
+        <h2>图4 · 编码范式（主轴编码）</h2>
+        <p class="desc">Strauss & Corbin 把范畴围绕现象重组的关系骨架。</p>
+        <div class="mermaid">
+flowchart LR
+    A[因果条件] --> P((现象))
+    B[脉络/情境] --> P
+    C[中介条件] --> P
+    P --> D[行动/互动策略]
+    D --> E[结果]
+    style P fill:#fff3cd,stroke:#b7791f
+    style E fill:#d1f0e0,stroke:#138a5b
+        </div>
+      </div>
+      <div class="card">
+        <h2>图5 · 理论模型结构模板（填空即用）</h2>
+        <p class="desc">替换为你的核心范畴与主范畴，即得论文里的理论模型图。</p>
+        <div class="mermaid">
+flowchart TD
+    COND[前因条件<br/>主范畴①②] --> CORE{核心范畴<br/>理论中心}
+    CONTEXT[情境/脉络<br/>主范畴③] -. 调节 .-> CORE
+    CORE --> STRAT[行动策略<br/>主范畴④⑤]
+    STRAT --> OUTCOME[结果/效应<br/>主范畴⑥]
+    OUTCOME -. 反馈 .-> COND
+    style CORE fill:#fff3cd,stroke:#b7791f,stroke-width:2px
+    style OUTCOME fill:#d1f0e0,stroke:#138a5b
+    style COND fill:#e7efff,stroke:#2563eb
+        </div>
+        <div class="tip">模型图箭头要对应数据支撑的命题，并在正文逐条论证。</div>
+      </div>
+    </div>
+
+    <!-- 主题分析 -->
+    <div class="group" id="ta">
+      <div class="card">
+        <h2>图1 · Braun & Clarke 反思性主题分析六步</h2>
+        <p class="desc">不是直线流程：第4步检验主题常需回到第2/3步反复修订。</p>
+        <div class="mermaid">
+flowchart TD
+    S1[1. 熟悉数据<br/>反复阅读·记想法] --> S2[2. 生成初始编码<br/>系统覆盖全数据]
+    S2 --> S3[3. 生成候选主题<br/>编码聚类成模式]
+    S3 --> S4{4. 检验主题<br/>对照编码片段+整个数据集}
+    S4 -- 需重组 --> S2
+    S4 -- 通过 --> S5[5. 定义与命名<br/>写主题故事+精炼名]
+    S5 --> S6[6. 撰写报告<br/>引语证据+分析叙述]
+    S6 --> ANS[回应研究问题]
+    style S4 fill:#fff3cd,stroke:#b7791f
+    style S6 fill:#e7efff,stroke:#2563eb
+    style ANS fill:#d1f0e0,stroke:#138a5b
+        </div>
+      </div>
+      <div class="card">
+        <h2>图2 · 编码 → 主题层级（主题 ≠ 编码汇总）</h2>
+        <p class="desc">主题是围绕中心组织概念的模式，不是某话题下所有说法的堆叠。</p>
+        <div class="mermaid">
+flowchart TD
+    d1[数据片段] --> co1[编码1]
+    d2[数据片段] --> co1
+    d3[数据片段] --> co2[编码2]
+    d4[数据片段] --> co3[编码3]
+    d5[数据片段] --> co4[编码4]
+    co1 --> st1[子主题 1.1]
+    co2 --> st1
+    co3 --> st2[子主题 1.2]
+    co4 --> st2
+    st1 --> T1[[主题 1<br/>中心组织概念]]
+    st2 --> T1
+    style T1 fill:#fff3cd,stroke:#b7791f
+        </div>
+      </div>
+      <div class="card">
+        <h2>图3 · 四种取向（编码前先声明）</h2>
+        <p class="desc">归纳/演绎 × 语义/潜义，自由组合，但需在方法部分声明。</p>
+        <div class="mermaid">
+flowchart LR
+    Q{两个维度} --> A[归纳<br/>编码从数据生]
+    Q --> B[演绎<br/>编码来自理论]
+    Q --> C[语义<br/>贴近字面]
+    Q --> D[潜义<br/>挖掘背后假设]
+    style Q fill:#fff3cd,stroke:#b7791f
+        </div>
+      </div>
+      <div class="card">
+        <h2>图4 · 该用哪种分析？决策图</h2>
+        <p class="desc">先判断研究目标与范式，再决定分析路线与是否报 Kappa。</p>
+        <div class="mermaid">
+flowchart TD
+    Q1{研究目标?}
+    Q1 -- 建构理论/机制 --> GT[扎根理论]
+    Q1 -- 提炼主题模式 --> Q2{要报<br/>编码一致性?}
+    Q1 -- 大规模文本+频次 --> CA[质性内容分析]
+    Q2 -- 否·建构主义 --> RTA[反思性主题分析]
+    Q2 -- 是·后实证 --> CRTA[编码可靠性TA + Kappa]
+    style GT fill:#fff3cd,stroke:#b7791f
+    style RTA fill:#d1f0e0,stroke:#138a5b
+    style CRTA fill:#e7efff,stroke:#2563eb
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>质性研究全流程 Skill · diagrams · 双击本文件离线查看 · 由 Mermaid 渲染</footer>
+
+  <script>
+    mermaid.initialize({startOnLoad:true, theme:'base', flowchart:{useMaxWidth:true, htmlLabels:true},
+      themeVariables:{fontFamily:'"Microsoft YaHei","PingFang SC",sans-serif', fontSize:'14px',
+        primaryColor:'#eef4ff', primaryBorderColor:'#c7d7f5', primaryTextColor:'#18212f', lineColor:'#647084'}});
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        document.querySelectorAll('.group').forEach(x=>x.classList.remove('show'));
+        t.classList.add('active');
+        document.getElementById(t.dataset.g).classList.add('show');
+      });
+    });
+  </script>
+</body>
+</html>

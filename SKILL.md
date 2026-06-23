@@ -32,6 +32,14 @@ license: MIT
 - `references/06-reliability-validity.md` — Cohen's Kappa、NVivo 编码比较、理论饱和、Lincoln & Guba 信实度、研究者反身性
 - `references/07-reporting.md` — COREQ 32 项、SRQR、引语呈现规范、方法/发现章节写作
 
+流程图与可视化：
+
+- `diagrams/grounded-theory.md` — 扎根理论编码流程、三级编码漏斗、三流派对照、编码范式、模型结构模板（Mermaid，GitHub 直接渲染）
+- `diagrams/thematic-analysis.md` — 主题分析六步流程、编码→主题层级、四种取向、方法决策图（Mermaid）
+- `diagrams/index.html` — 离线渲染页，双击可查看上述全部流程图并截图（用于论文/科普）
+
+当用户要"流程图""模型图""可视化编码过程"时，先 Read 对应 diagrams 文件，按需用其中的 Mermaid 代码并替换为用户自己的范畴/主题。
+
 模板与工具：
 
 - `templates/` — 访谈提纲、编码簿、COREQ 自检表、知情同意书等可直接套用的模板
