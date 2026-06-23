@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kappa 一致性系数计算器</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #18212f;
+      --muted: #647084;
+      --line: #d8deea;
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --green: #138a5b;
+      --amber: #b7791f;
+      --red: #c24138;
+      --shadow: 0 18px 45px rgba(34, 45, 70, .10);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #eef4ff 0, rgba(238, 244, 255, 0) 310px),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 34px clamp(18px, 4vw, 52px) 20px;
+      border-bottom: 1px solid rgba(216, 222, 234, .75);
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 820px;
+    }
+
+    .formula-badge {
+      justify-self: end;
+      background: #11243f;
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 8px;
+      min-width: 210px;
+      box-shadow: var(--shadow);
+    }
+
+    .formula-badge strong {
+      display: block;
+      font-size: 13px;
+      color: #b7cdfb;
+      margin-bottom: 6px;
+    }
+
+    .formula-badge code {
+      font-size: 19px;
+      color: #fff;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px clamp(18px, 4vw, 52px) 44px;
+    }
+
+    .quick-guide {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .quick-guide h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .quick-calc {
+      margin-bottom: 18px;
+    }
+
+    .quick-calc textarea {
+      min-height: 120px;
+      font-size: 15px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      background: #f8fafd;
+      border-radius: 8px;
+      padding: 13px;
+      min-height: 112px;
+    }
+
+    .step b {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      min-height: 42px;
+    }
+
+    .tab.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.16fr) minmax(320px, .84fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-header {
+      padding: 17px 18px 12px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .panel-header h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .panel-body { padding: 18px; }
+    .hidden { display: none !important; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 0 0 7px;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px 11px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 190px;
+      resize: vertical;
+      line-height: 1.55;
+      font-family: Consolas, "Microsoft YaHei", monospace;
+      font-size: 13px;
+    }
+
+    input[type="number"] { text-align: right; }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .four-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 13px;
+      font: inherit;
+      cursor: pointer;
+      min-height: 40px;
+    }
+
+    button.primary {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      font-weight: 700;
+    }
+
+    button.primary:hover { background: var(--blue-dark); }
+    button:hover { border-color: #9aa9c0; }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 8px 0 0;
+    }
+
+    .sample-box {
+      margin-top: 12px;
+      border: 1px solid #c8d6ef;
+      background: #f6f9ff;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .sample-box strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .sample-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: Consolas, "Microsoft YaHei", monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #26364d;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      background: #f8fafd;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 92px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: 0;
+      word-break: break-word;
+    }
+
+    .interpretation {
+      margin-top: 14px;
+      border-left: 4px solid var(--blue);
+      background: #f2f6ff;
+      padding: 13px 14px;
+      border-radius: 0 7px 7px 0;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .interpretation.good { border-left-color: var(--green); background: #f0fbf6; }
+    .interpretation.warn { border-left-color: var(--amber); background: #fff8e8; }
+    .interpretation.bad { border-left-color: var(--red); background: #fff2f1; }
+
+    .report-box {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      background: #fbfcff;
+      border-radius: 8px;
+      padding: 13px;
+    }
+
+    .report-box label {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .report-box textarea {
+      min-height: 112px;
+      background: #fff;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f4f7fb;
+      color: #334155;
+      font-weight: 700;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+      border-radius: 7px;
+    }
+
+    .matrix-controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .manual-matrix {
+      margin-top: 14px;
+      overflow-x: auto;
+    }
+
+    .manual-matrix input {
+      min-width: 74px;
+      padding: 8px;
+    }
+
+    .summary-text {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .error {
+      margin-top: 12px;
+      color: #9f1d18;
+      background: #fff2f1;
+      border: 1px solid #ffd1cc;
+      padding: 10px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 clamp(18px, 4vw, 52px) 32px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 860px) {
+      .header-inner,
+      .grid,
+      .field-grid,
+      .four-grid,
+      .metrics,
+      .steps,
+      .matrix-controls {
+        grid-template-columns: 1fr;
+      }
+      .formula-badge { justify-self: stretch; }
+      header { padding-top: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>Kappa 一致性系数计算器</h1>
+        <p class="subtitle">用于两个编码员、两个评分者或 NVivo 编码比较结果的一致性检验。支持逐条分类数据、CSV/TSV 粘贴、手动混淆矩阵，以及 NVivo 四格百分比。</p>
+      </div>
+      <div class="formula-badge" aria-label="公式">
+        <strong>Cohen's Kappa</strong>
+        <code>κ = (Po - Pe) / (1 - Pe)</code>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="quick-guide" aria-label="快速使用指引">
+      <h2>同学版快速指引</h2>
+      <div class="steps">
+        <div class="step">
+          <b>1</b>
+          <strong>复制四个数值</strong>
+          <p>从 Excel 或 NVivo 表里复制 A和B、非A且非B、A且非B、B且非A。</p>
+        </div>
+        <div class="step">
+          <b>2</b>
+          <strong>粘贴到数值框</strong>
+          <p>可以只粘贴四个数字，也可以连表头一起粘贴。</p>
+        </div>
+        <div class="step">
+          <b>3</b>
+          <strong>点击计算并复制结论</strong>
+          <p>结果区会自动生成可放进作业、论文或研究报告的表述。</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="计算方式">
+      <button class="tab active" data-tab="quick" type="button">最简单：粘贴数值</button>
+      <button class="tab" data-tab="pairs" type="button">备用：粘贴两列编码</button>
+      <button class="tab" data-tab="nvivo" type="button">手动填四格数值</button>
+      <button class="tab" data-tab="matrix" type="button">高级：手动矩阵</button>
+    </div>
+
+    <div class="grid">
+      <section class="panel quick-calc" id="quickPanel">
+        <div class="panel-header">
+          <h2>直接粘贴数值计算</h2>
+        </div>
+        <div class="panel-body">
+          <label for="quickPaste">把四个数值粘贴到这里</label>
+          <textarea id="quickPaste" spellcheck="false">A和B(%)	非A且非B(%)	A且非B(%)	B且非A(%)
+80	10	6	4</textarea>
+          <p class="hint">推荐直接从 Excel 复制这四列。顺序为：A和B、非A且非B、A且非B、B且非A。数值可以是百分比、比例或数量。</p>
+          <div class="sample-box">
+            <strong>可以这样粘贴</strong>
+            <pre>80    10    6    4
+
+或：
+A和B(%)    非A且非B(%)    A且非B(%)    B且非A(%)
+80         10             6            4</pre>
+          </div>
+          <div class="button-row">
+            <button class="primary" id="calcQuick" type="button">立即计算</button>
+            <button id="quickExample" type="button">载入示例</button>
+            <button id="clearQuick" type="button">清空</button>
+          </div>
+          <div id="quickError" class="error hidden"></div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="pairsPanel">
+        <div class="panel-header">
+          <h2>把两位同学的编码结果粘贴到这里</h2>
+        </div>
+        <div class="panel-body">
+          <label for="pairData">数据粘贴区</label>
+          <textarea id="pairData" spellcheck="false">编码员A,编码员B
+同意,同意
+同意,不同意
+不同意,不同意
+待定,待定
+待定,同意
+同意,同意</textarea>
+          <p class="hint">最简单做法：在 Excel 选中两列编码结果，直接复制并粘贴到这里。第一行有无表头都可以。</p>
+          <div class="sample-box">
+            <strong>粘贴格式示例</strong>
+            <pre>编码员A    编码员B
+政策支持  政策支持
+服务对象  服务对象
+资金保障  服务对象</pre>
+          </div>
+          <div class="button-row">
+            <button class="primary" id="calcPairs" type="button">计算 Kappa</button>
+            <button id="loadExample" type="button">载入示例</button>
+            <button id="clearPairs" type="button">清空</button>
+          </div>
+          <div class="field-grid" style="margin-top:14px">
+            <div>
+              <label for="colA">编码者 A 列</label>
+              <select id="colA"></select>
+            </div>
+            <div>
+              <label for="colB">编码者 B 列</label>
+              <select id="colB"></select>
+            </div>
+          </div>
+          <div id="pairError" class="error hidden"></div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="nvivoPanel">
+        <div class="panel-header">
+          <h2>输入 NVivo 编码比较百分比</h2>
+        </div>
+        <div class="panel-body">
+          <div class="four-grid">
+            <div>
+              <label for="bothPct">A和B (%)</label>
+              <input id="bothPct" type="number" step="0.0001" value="80" />
+            </div>
+            <div>
+              <label for="neitherPct">非A且非B (%)</label>
+              <input id="neitherPct" type="number" step="0.0001" value="10" />
+            </div>
+            <div>
+              <label for="aOnlyPct">A且非B (%)</label>
+              <input id="aOnlyPct" type="number" step="0.0001" value="6" />
+            </div>
+            <div>
+              <label for="bOnlyPct">B且非A (%)</label>
+              <input id="bOnlyPct" type="number" step="0.0001" value="4" />
+            </div>
+          </div>
+          <p class="hint">可以填百分比、比例或数量。这里按二分类编码比较计算：Po = A和B + 非A且非B。</p>
+          <div class="button-row">
+            <button class="primary" id="calcNvivo" type="button">计算 Kappa</button>
+            <button id="normalizeNvivo" type="button">按比例归一到 100%</button>
+          </div>
+          <div id="nvivoError" class="error hidden"></div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="matrixPanel">
+        <div class="panel-header">
+          <h2>手动输入混淆矩阵</h2>
+        </div>
+        <div class="panel-body">
+          <div class="matrix-controls">
+            <div>
+              <label for="labels">类别名称</label>
+              <input id="labels" value="同意,不同意,待定" />
+            </div>
+            <button id="buildMatrix" type="button">生成矩阵</button>
+          </div>
+          <p class="hint">横向为编码者 B，纵向为编码者 A。填入每个类别组合出现的次数。</p>
+          <div class="manual-matrix" id="matrixEditor"></div>
+          <div class="button-row">
+            <button class="primary" id="calcMatrix" type="button">计算 Kappa</button>
+            <button id="fillMatrixExample" type="button">载入示例</button>
+          </div>
+          <div id="matrixError" class="error hidden"></div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <div class="panel-header">
+          <h2>计算结果</h2>
+          <button id="copyResult" type="button">复制报告文字</button>
+        </div>
+        <div class="panel-body">
+          <div class="metrics">
+            <div class="metric"><span>Kappa κ</span><strong id="kappaValue">-</strong></div>
+            <div class="metric"><span>一致性等级</span><strong id="levelValue">-</strong></div>
+            <div class="metric"><span>观察一致率 Po</span><strong id="poValue">-</strong></div>
+            <div class="metric"><span>期望一致率 Pe</span><strong id="peValue">-</strong></div>
+            <div class="metric"><span>有效样本数</span><strong id="nValue">-</strong></div>
+            <div class="metric"><span>类别数</span><strong id="classValue">-</strong></div>
+          </div>
+          <div id="interpretation" class="interpretation">输入数据后点击计算，这里会显示解释和注意事项。</div>
+          <div class="report-box">
+            <label for="reportText">可直接写进报告的文字</label>
+            <textarea id="reportText" readonly>计算完成后，这里会自动生成报告表述。</textarea>
+          </div>
+          <div class="table-wrap" id="matrixTable"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    解释标准采用 Landis & Koch 常见分级：&lt;0 差，0.00-0.20 轻微，0.21-0.40 一般，0.41-0.60 中等，0.61-0.80 较好，0.81-1.00 几乎完全一致。研究报告中建议同时报告 κ、Po、Pe、样本量和类别定义。
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const state = { lastResult: null };
+
+    function parseDelimited(text) {
+      const rows = [];
+      let row = [], cell = "", inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i], next = text[i + 1];
+        if (ch === '"' && inQuotes && next === '"') {
+          cell += '"'; i++;
+        } else if (ch === '"') {
+          inQuotes = !inQuotes;
+        } else if ((ch === "," || ch === "\t") && !inQuotes) {
+          row.push(cell.trim()); cell = "";
+        } else if ((ch === "\n" || ch === "\r") && !inQuotes) {
+          if (ch === "\r" && next === "\n") i++;
+          row.push(cell.trim());
+          if (row.some(Boolean)) rows.push(row);
+          row = []; cell = "";
+        } else {
+          cell += ch;
+        }
+      }
+      row.push(cell.trim());
+      if (row.some(Boolean)) rows.push(row);
+      return rows;
+    }
+
+    function looksLikeHeader(row) {
+      if (!row || row.length < 2) return false;
+      const joined = row.join("").toLowerCase();
+      return /编码|coder|rater|a|b|类别|代码|结果|category/.test(joined);
+    }
+
+    function updateColumnSelectors() {
+      const rows = parseDelimited($("pairData").value);
+      const first = rows[0] || ["第1列", "第2列"];
+      const hasHeader = looksLikeHeader(first);
+      const labels = hasHeader ? first : first.map((_, i) => `第${i + 1}列`);
+      ["colA", "colB"].forEach((id, selectIndex) => {
+        const el = $(id);
+        const current = el.value;
+        el.innerHTML = "";
+        labels.forEach((name, i) => {
+          const opt = document.createElement("option");
+          opt.value = String(i);
+          opt.textContent = name || `第${i + 1}列`;
+          el.appendChild(opt);
+        });
+        el.value = current && Number(current) < labels.length ? current : String(Math.min(selectIndex, labels.length - 1));
+      });
+    }
+
+    function buildMatrixFromPairs(pairs) {
+      const labels = Array.from(new Set(pairs.flat())).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
+      const index = new Map(labels.map((label, i) => [label, i]));
+      const matrix = labels.map(() => labels.map(() => 0));
+      pairs.forEach(([a, b]) => matrix[index.get(a)][index.get(b)]++);
+      return { labels, matrix };
+    }
+
+    function computeKappa(labels, matrix) {
+      const n = matrix.flat().reduce((sum, value) => sum + Number(value || 0), 0);
+      if (!Number.isFinite(n) || n <= 0) throw new Error("有效样本数为 0，无法计算。");
+      const rowTotals = matrix.map(row => row.reduce((sum, value) => sum + Number(value || 0), 0));
+      const colTotals = labels.map((_, j) => matrix.reduce((sum, row) => sum + Number(row[j] || 0), 0));
+      const agreement = matrix.reduce((sum, row, i) => sum + Number(row[i] || 0), 0);
+      const po = agreement / n;
+      const pe = rowTotals.reduce((sum, r, i) => sum + r * colTotals[i], 0) / (n * n);
+      const kappa = Math.abs(1 - pe) < 1e-12 ? (Math.abs(1 - po) < 1e-12 ? 1 : NaN) : (po - pe) / (1 - pe);
+      return { labels, matrix, n, po, pe, kappa, rowTotals, colTotals };
+    }
+
+    function computeNvivoValues(values) {
+      let [both, neither, aOnly, bOnly] = values.map(Number);
+      const total = both + neither + aOnly + bOnly;
+      if (values.some(v => !Number.isFinite(v) || v < 0)) throw new Error("四个数值都必须是非负数字。");
+      if (!Number.isFinite(total) || total <= 0) throw new Error("四个数值合计必须大于 0。");
+      if (total <= 1.0001) {
+        both *= 100;
+        neither *= 100;
+        aOnly *= 100;
+        bOnly *= 100;
+      }
+      return computeKappa(["编码", "未编码"], [[both, aOnly], [bOnly, neither]]);
+    }
+
+    function parseNumber(value) {
+      const match = String(value || "").replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
+      return match ? Number(match[0]) : NaN;
+    }
+
+    function headerKind(text) {
+      const s = String(text || "").replace(/\s/g, "");
+      if (/非A且非B|非A.*非B|neither/i.test(s)) return "neither";
+      if (/A且非B|A.*非B|aonly/i.test(s)) return "aOnly";
+      if (/B且非A|B.*非A|bonly/i.test(s)) return "bOnly";
+      if (/A和B|A与B|both|agree/i.test(s)) return "both";
+      return "";
+    }
+
+    function parseQuickValues(text) {
+      const rows = parseDelimited(text);
+      for (let i = 0; i < rows.length; i++) {
+        const map = {};
+        rows[i].forEach((cell, index) => {
+          const kind = headerKind(cell);
+          if (kind) map[kind] = index;
+        });
+        if (["both", "neither", "aOnly", "bOnly"].every(k => k in map)) {
+          const dataRow = rows.slice(i + 1).find(row => ["both", "neither", "aOnly", "bOnly"].every(k => Number.isFinite(parseNumber(row[map[k]]))));
+          if (dataRow) return ["both", "neither", "aOnly", "bOnly"].map(k => parseNumber(dataRow[map[k]]));
+        }
+      }
+      const numbers = String(text).replace(/,/g, "").match(/-?\d+(?:\.\d+)?/g)?.map(Number) || [];
+      if (numbers.length < 4) throw new Error("没有识别到四个数值。请按顺序粘贴：A和B、非A且非B、A且非B、B且非A。");
+      return numbers.slice(-4);
+    }
+
+    function level(kappa) {
+      if (!Number.isFinite(kappa)) return { text: "无法判定", cls: "warn" };
+      if (kappa < 0) return { text: "差", cls: "bad" };
+      if (kappa <= 0.20) return { text: "轻微", cls: "bad" };
+      if (kappa <= 0.40) return { text: "一般", cls: "warn" };
+      if (kappa <= 0.60) return { text: "中等", cls: "warn" };
+      if (kappa <= 0.80) return { text: "较好", cls: "good" };
+      return { text: "几乎完全", cls: "good" };
+    }
+
+    function fmt(value, digits = 4) {
+      if (!Number.isFinite(value)) return "-";
+      return Number(value).toFixed(digits);
+    }
+
+    function pct(value) {
+      if (!Number.isFinite(value)) return "-";
+      return (value * 100).toFixed(2) + "%";
+    }
+
+    function renderResult(result) {
+      state.lastResult = result;
+      const lv = level(result.kappa);
+      $("kappaValue").textContent = fmt(result.kappa);
+      $("levelValue").textContent = lv.text;
+      $("poValue").textContent = pct(result.po);
+      $("peValue").textContent = pct(result.pe);
+      $("nValue").textContent = Number.isInteger(result.n) ? String(result.n) : fmt(result.n);
+      $("classValue").textContent = String(result.labels.length);
+      const box = $("interpretation");
+      box.className = `interpretation ${lv.cls}`;
+      box.textContent = `κ=${fmt(result.kappa)}，观察一致率为 ${pct(result.po)}，扣除随机一致后的等级为“${lv.text}”。若类别分布极不均衡，建议同时查看 Po、Pe 和下方混淆矩阵。`;
+      const nText = Number.isInteger(result.n) ? String(result.n) : fmt(result.n);
+      $("reportText").value = `两名编码者的一致性检验结果显示，Cohen's Kappa 系数为 ${fmt(result.kappa)}，观察一致率 Po 为 ${pct(result.po)}，期望一致率 Pe 为 ${pct(result.pe)}，有效基数为 ${nText}，一致性水平可解释为“${lv.text}”。本次分析纳入的编码类别为：${result.labels.join("、")}。`;
+      renderMatrixTable(result);
+    }
+
+    function renderMatrixTable(result) {
+      const { labels, matrix, rowTotals, colTotals, n } = result;
+      let html = "<table><thead><tr><th>编码者A \\ 编码者B</th>";
+      labels.forEach(label => html += `<th>${escapeHtml(label)}</th>`);
+      html += "<th>行合计</th></tr></thead><tbody>";
+      matrix.forEach((row, i) => {
+        html += `<tr><th>${escapeHtml(labels[i])}</th>`;
+        row.forEach((value, j) => {
+          const style = i === j ? "font-weight:700;background:#f0fbf6" : "";
+          html += `<td style="${style}">${value}</td>`;
+        });
+        html += `<td>${rowTotals[i]}</td></tr>`;
+      });
+      html += "<tr><th>列合计</th>";
+      colTotals.forEach(value => html += `<td>${value}</td>`);
+      html += `<td>${n}</td></tr></tbody></table>`;
+      $("matrixTable").innerHTML = html;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+    }
+
+    function showError(id, message) {
+      const el = $(id);
+      el.textContent = message;
+      el.classList.toggle("hidden", !message);
+    }
+
+    function calculateQuick() {
+      showError("quickError", "");
+      try {
+        const values = parseQuickValues($("quickPaste").value);
+        renderResult(computeNvivoValues(values));
+      } catch (err) {
+        showError("quickError", err.message);
+      }
+    }
+
+    function calculatePairs() {
+      showError("pairError", "");
+      try {
+        const rows = parseDelimited($("pairData").value);
+        if (rows.length < 2) throw new Error("至少需要两行数据。");
+        const start = looksLikeHeader(rows[0]) ? 1 : 0;
+        const colA = Number($("colA").value || 0);
+        const colB = Number($("colB").value || 1);
+        if (colA === colB) throw new Error("编码者 A 和 B 不能选择同一列。");
+        const pairs = rows.slice(start)
+          .map(row => [String(row[colA] || "").trim(), String(row[colB] || "").trim()])
+          .filter(([a, b]) => a && b);
+        if (pairs.length === 0) throw new Error("没有找到有效的成对编码数据。");
+        renderResult(computeKappa(...Object.values(buildMatrixFromPairs(pairs))));
+      } catch (err) {
+        showError("pairError", err.message);
+      }
+    }
+
+    function calculateNvivo() {
+      showError("nvivoError", "");
+      try {
+        const both = Number($("bothPct").value);
+        const neither = Number($("neitherPct").value);
+        const aOnly = Number($("aOnlyPct").value);
+        const bOnly = Number($("bOnlyPct").value);
+        const values = [both, neither, aOnly, bOnly];
+        renderResult(computeNvivoValues(values));
+      } catch (err) {
+        showError("nvivoError", err.message);
+      }
+    }
+
+    function normalizeNvivo() {
+      const ids = ["bothPct", "neitherPct", "aOnlyPct", "bOnlyPct"];
+      const values = ids.map(id => Number($(id).value || 0));
+      const total = values.reduce((a, b) => a + b, 0);
+      if (total > 0) ids.forEach((id, i) => $(id).value = (values[i] / total * 100).toFixed(4));
+    }
+
+    function buildManualMatrix(prefill) {
+      const labels = $("labels").value.split(/[,，\n]/).map(s => s.trim()).filter(Boolean);
+      if (labels.length < 2) {
+        showError("matrixError", "至少需要两个类别。");
+        return;
+      }
+      showError("matrixError", "");
+      let html = "<table><thead><tr><th>A \\ B</th>";
+      labels.forEach(label => html += `<th>${escapeHtml(label)}</th>`);
+      html += "</tr></thead><tbody>";
+      labels.forEach((label, i) => {
+        html += `<tr><th>${escapeHtml(label)}</th>`;
+        labels.forEach((_, j) => {
+          const value = prefill && prefill[i] ? prefill[i][j] || 0 : 0;
+          html += `<td><input type="number" min="0" step="1" value="${value}" data-i="${i}" data-j="${j}"></td>`;
+        });
+        html += "</tr>";
+      });
+      html += "</tbody></table>";
+      $("matrixEditor").innerHTML = html;
+    }
+
+    function calculateManualMatrix() {
+      showError("matrixError", "");
+      try {
+        const labels = $("labels").value.split(/[,，\n]/).map(s => s.trim()).filter(Boolean);
+        const matrix = labels.map(() => labels.map(() => 0));
+        $("matrixEditor").querySelectorAll("input").forEach(input => {
+          matrix[Number(input.dataset.i)][Number(input.dataset.j)] = Number(input.value || 0);
+        });
+        if (matrix.flat().some(v => !Number.isFinite(v) || v < 0)) throw new Error("矩阵只能填写非负数字。");
+        renderResult(computeKappa(labels, matrix));
+      } catch (err) {
+        showError("matrixError", err.message);
+      }
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll(".tab").forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tab));
+      $("quickPanel").classList.toggle("hidden", tab !== "quick");
+      $("pairsPanel").classList.toggle("hidden", tab !== "pairs");
+      $("nvivoPanel").classList.toggle("hidden", tab !== "nvivo");
+      $("matrixPanel").classList.toggle("hidden", tab !== "matrix");
+    }
+
+    function copyResult() {
+      if (!state.lastResult) return;
+      const text = $("reportText").value;
+      navigator.clipboard && navigator.clipboard.writeText(text);
+    }
+
+    document.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => switchTab(btn.dataset.tab)));
+    $("calcQuick").addEventListener("click", calculateQuick);
+    $("quickExample").addEventListener("click", () => {
+      $("quickPaste").value = "A和B(%)\t非A且非B(%)\tA且非B(%)\tB且非A(%)\n80\t10\t6\t4";
+      calculateQuick();
+    });
+    $("clearQuick").addEventListener("click", () => { $("quickPaste").value = ""; showError("quickError", ""); });
+    $("pairData").addEventListener("input", updateColumnSelectors);
+    $("calcPairs").addEventListener("click", calculatePairs);
+    $("loadExample").addEventListener("click", () => {
+      $("pairData").value = "编码员A,编码员B\n政策支持,政策支持\n政策支持,政策支持\n服务对象,服务对象\n服务对象,政策支持\n资金保障,资金保障\n资金保障,服务对象\n政策支持,政策支持\n服务对象,服务对象";
+      updateColumnSelectors();
+      calculatePairs();
+    });
+    $("clearPairs").addEventListener("click", () => { $("pairData").value = ""; updateColumnSelectors(); });
+    $("calcNvivo").addEventListener("click", calculateNvivo);
+    $("normalizeNvivo").addEventListener("click", normalizeNvivo);
+    $("buildMatrix").addEventListener("click", () => buildManualMatrix());
+    $("calcMatrix").addEventListener("click", calculateManualMatrix);
+    $("fillMatrixExample").addEventListener("click", () => {
+      $("labels").value = "同意,不同意,待定";
+      buildManualMatrix([[32, 5, 1], [4, 27, 2], [2, 3, 14]]);
+      calculateManualMatrix();
+    });
+    $("copyResult").addEventListener("click", copyResult);
+
+    updateColumnSelectors();
+    buildManualMatrix();
+    calculateQuick();
+  </script>
+</body>
+</html>

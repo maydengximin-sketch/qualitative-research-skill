@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*~
+~$*
+
+# 临时/个人数据（避免误传真实访谈数据）
+*.nvp
+*.nvpx
+*.mx22
+data/
+transcripts/
+原始数据/
+访谈数据/
