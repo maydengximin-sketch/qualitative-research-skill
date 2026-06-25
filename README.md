@@ -1,9 +1,11 @@
 # 质性研究全流程助手 · Qualitative Research Skill
 
+**🌐 [English](./README.en.md) | 简体中文**
+
 > 一个面向 **Claude Code / Claude Agent** 的质性研究（定性研究）方法学技能包：从立题、抽样、访谈、编码，到信效度、报告，覆盖整条研究链路。工具中立，适配 NVivo / MAXQDA / ATLAS.ti 乃至纯手工编码。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-![Lang](https://img.shields.io/badge/lang-中文-blue)
+![Lang](https://img.shields.io/badge/lang-中文%20|%20English-blue)
 ![Type](https://img.shields.io/badge/Claude-Skill-8A2BE2)
 ![Stage](https://img.shields.io/badge/coverage-立题→成文-success)
 ![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen)
@@ -50,7 +52,7 @@
 本 Skill 的不同之处：
 
 - **范式优先的判断逻辑**：先帮你判断范式与方法学，再决定技术——比如它**不会无脑让你算 Kappa**，而是先看你是不是建构主义路径。
-- **可追溯**：每份文档末尾附真实经典文献（Charmaz、Braun & Clarke、Lincoln & Guba、COREQ 原文……），不是空口white说。
+- **可追溯**：每份文档末尾附真实经典文献（Charmaz、Braun & Clarke、Lincoln & Guba、COREQ 原文……），不是空口白说。
 - **带可执行产物**：访谈提纲、编码簿、知情同意书、COREQ 清单、Kappa 计算器、流程图，都能直接拿走用。
 
 ## 📦 内容结构
