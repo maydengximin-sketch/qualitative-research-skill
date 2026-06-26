@@ -60,23 +60,33 @@ What makes this Skill different:
 ```
 qualitative-research/
 ├── SKILL.md                       # Skill main file (triggers & navigation)
-├── references/                    # Seven methodology deep-dives (core knowledge base)
+├── references/                    # Thirteen methodology deep-dives (core knowledge base)
 │   ├── 01-research-design.md      # Paradigms · methodology lineage · refining the RQ
 │   ├── 02-sampling.md             # Purposive/theoretical sampling · sample size · information richness
 │   ├── 03-data-collection.md      # Interview guides · focus groups · transcription · ethics
 │   ├── 04-coding-grounded-theory.md  # Grounded theory's three schools · open/axial/selective coding
 │   ├── 05-coding-thematic.md      # Braun & Clarke six-phase thematic analysis · content analysis
 │   ├── 06-reliability-validity.md # Cohen's Kappa · NVivo coding comparison · saturation · trustworthiness
-│   └── 07-reporting.md            # COREQ/SRQR · quote presentation · section writing
+│   ├── 07-reporting.md            # COREQ/SRQR · quote presentation · section writing
+│   ├── 08-content-policy-analysis.md   # Content analysis · policy document analysis · policy-instrument framework
+│   ├── 09-network-multimodal-data.md   # Social-media text collection & ethics · audio/video/image multimodal coding
+│   ├── 10-mixed-methods.md             # Mixed-methods designs · joint displays · scale development
+│   ├── 11-software-operations.md       # NVivo/MAXQDA practice · case attributes · matrix queries · visualization
+│   ├── 12-case-library.md              # Four worked-case research skeletons
+│   └── 13-faq-pitfalls.md              # Top-10 pitfalls · viva Q&A · paradigm-coherence self-check
 ├── diagrams/                      # Flow & model diagrams (Mermaid, render directly on GitHub)
 │   ├── grounded-theory.md         # GT coding flow · three-level coding funnel · model templates
 │   ├── thematic-analysis.md       # Thematic six-phase · code→theme hierarchy · method decision tree
 │   └── index.html                 # Offline render page — double-click to view all diagrams and screenshot
 ├── templates/                     # Ready-to-use templates (fill-in-the-blank)
-│   ├── interview-guide-template.md   # Semi-structured interview guide
-│   ├── codebook-template.md          # Codebook
-│   ├── coreq-checklist.md            # COREQ 32-item self-check
-│   └── consent-form-template.md      # Informed consent form
+│   ├── interview-guide-template.md          # Semi-structured interview guide
+│   ├── focus-group-guide-template.md        # Focus group discussion guide
+│   ├── codebook-template.md                 # Codebook
+│   ├── three-level-coding-table-template.md # GT three-level coding summary table
+│   ├── network-text-collection-log-template.md  # Network-text collection log (with compliance check)
+│   ├── research-design-onepager-template.md # Research-design one-pager
+│   ├── coreq-checklist.md                   # COREQ 32-item self-check
+│   └── consent-form-template.md             # Informed consent form
 └── tools/
     └── kappa-calculator/          # Offline Kappa agreement calculator (double-click, no internet)
         ├── index.html

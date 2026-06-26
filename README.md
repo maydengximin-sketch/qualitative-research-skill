@@ -60,23 +60,33 @@
 ```
 qualitative-research/
 ├── SKILL.md                       # 技能主文件（触发与导航）
-├── references/                    # 七份方法学详解（核心知识库）
+├── references/                    # 十三份方法学详解（核心知识库）
 │   ├── 01-research-design.md      # 范式·方法学家谱·研究问题打磨
 │   ├── 02-sampling.md             # 目的/理论抽样·样本量·信息丰富度
 │   ├── 03-data-collection.md      # 访谈提纲·焦点小组·转录·伦理
 │   ├── 04-coding-grounded-theory.md  # 扎根理论三流派·开放/主轴/选择性编码
 │   ├── 05-coding-thematic.md      # Braun & Clarke 六步主题分析·内容分析
 │   ├── 06-reliability-validity.md # Cohen's Kappa·NVivo编码比较·饱和·信实度
-│   └── 07-reporting.md            # COREQ/SRQR·引语呈现·章节写作
+│   ├── 07-reporting.md            # COREQ/SRQR·引语呈现·章节写作
+│   ├── 08-content-policy-analysis.md   # 内容分析三取向·政策文本与政策工具框架
+│   ├── 09-network-multimodal-data.md   # 小红书等网络文本采集合规·音视频/图片多模态
+│   ├── 10-mixed-methods.md             # 质性+定量混合设计·联合展示表·量表开发
+│   ├── 11-software-operations.md       # NVivo/MAXQDA 实操·案例属性·矩阵查询·可视化
+│   ├── 12-case-library.md              # 四类真实案例完整研究骨架
+│   └── 13-faq-pitfalls.md              # 十大错误·答辩高频问答·范式自洽自检
 ├── diagrams/                      # 流程图与模型图（Mermaid，GitHub 直接渲染）
 │   ├── grounded-theory.md         # 扎根理论编码流程·三级编码漏斗·模型结构模板
 │   ├── thematic-analysis.md       # 主题分析六步·编码→主题层级·方法决策图
 │   └── index.html                 # 离线渲染页，双击查看全部流程图并截图
 ├── templates/                     # 即用模板（填空即用）
-│   ├── interview-guide-template.md   # 半结构访谈提纲
-│   ├── codebook-template.md          # 编码簿
-│   ├── coreq-checklist.md            # COREQ 32 项自检表
-│   └── consent-form-template.md      # 知情同意书
+│   ├── interview-guide-template.md          # 半结构访谈提纲
+│   ├── focus-group-guide-template.md        # 焦点小组讨论提纲
+│   ├── codebook-template.md                 # 编码簿
+│   ├── three-level-coding-table-template.md # 扎根理论三级编码汇总表
+│   ├── network-text-collection-log-template.md  # 网络文本采集登记表（含合规自查）
+│   ├── research-design-onepager-template.md # 研究设计一页纸
+│   ├── coreq-checklist.md                   # COREQ 32 项自检表
+│   └── consent-form-template.md             # 知情同意书
 └── tools/
     └── kappa-calculator/          # 离线 Kappa 一致性计算器（双击即用，无需联网）
         ├── index.html
@@ -94,6 +104,10 @@ qualitative-research/
 | **5 信度效度** | 判断要不要报 ICR、算/解读 Cohen's Kappa、判定理论饱和、用 Lincoln & Guba 四标准做信实度论证 | `06` + Kappa 计算器 |
 | **6 报告写作** | 按 COREQ/SRQR 自检、组织引语证据（含反例）、起草方法与发现章节、画概念模型 | `07` + 模板 |
 | **7 可视化** | 生成扎根理论模型图、主题分析流程图，替换成你自己的范畴/主题 | `diagrams` |
+| **8 特殊数据** | 政策文本（政策工具框架）、小红书等网络文本采集与合规、音视频/图片多模态编码 | `08` `09` |
+| **9 混合方法** | 质性+定量混合设计、量表开发的质性环节、联合展示表 | `10` |
+| **10 软件实操** | NVivo/MAXQDA 建项目、案例属性、三级编码、矩阵查询、可视化出图 | `11` |
+| **11 案例+避坑** | 四类真实案例骨架、十大错误、答辩高频问答、范式自洽自检 | `12` `13` |
 
 ## 🚀 安装与使用
 

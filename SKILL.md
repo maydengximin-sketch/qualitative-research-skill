@@ -16,9 +16,12 @@ license: MIT
 | 1. 研究设计 | 帮你选范式（建构主义/后实证/批判等）、匹配方法（扎根理论/现象学/个案/民族志/话语分析）、把宽泛兴趣收敛成可研究的 RQ |
 | 2. 抽样 | 设计目的抽样/理论抽样/最大差异抽样策略，估算样本量，写抽样论证段落 |
 | 3. 数据收集 | 生成半结构访谈提纲、焦点小组脚本、探询问题（probes），制定转录规范 |
-| 4. 编码分析 | 扎根理论三级编码、主题分析六步法、内容分析；从原始语料起草初始编码、归并范畴、抽提主题 |
+| 4. 编码分析 | 扎根理论三级编码、主题分析六步法、内容分析、政策文本分析；从原始语料起草初始编码、归并范畴、抽提主题 |
 | 5. 信度与效度 | 设计双编码方案、计算/解读 Cohen's Kappa、判定理论饱和、用 Lincoln & Guba 四标准做信实度论证 |
 | 6. 报告写作 | 按 COREQ/SRQR 清单自检、组织引语证据、起草方法与发现章节、画概念模型 |
+| 7. 特殊数据 | 网络文本（小红书/微博/点评）采集与合规、音视频/图片多模态编码、政策文件分析 |
+| 8. 混合方法 | 质性+定量混合设计、量表开发的质性环节、联合展示表（衔接 questionnaire-analysis skill）|
+| 9. 软件实操 | NVivo/MAXQDA 建项目、案例属性、三级编码、矩阵查询、可视化出图 |
 
 ## 使用方式（重要：先读对应 reference）
 
@@ -31,6 +34,12 @@ license: MIT
 - `references/05-coding-thematic.md` — Braun & Clarke 反思性主题分析六步、编码 vs 主题、内容分析对照
 - `references/06-reliability-validity.md` — Cohen's Kappa、NVivo 编码比较、理论饱和、Lincoln & Guba 信实度、研究者反身性
 - `references/07-reporting.md` — COREQ 32 项、SRQR、引语呈现规范、方法/发现章节写作
+- `references/08-content-policy-analysis.md` — 内容分析三取向、政策文本分析与政策工具框架（供给/环境/需求）、二维编码矩阵
+- `references/09-network-multimodal-data.md` — 小红书/微博等网络文本采集与清洗、伦理合规、音视频/图片多模态编码
+- `references/10-mixed-methods.md` — 质性+定量混合设计（解释性/探索性/并行）、联合展示表、量表开发的质性环节（衔接 questionnaire-analysis）
+- `references/11-software-operations.md` — NVivo/MAXQDA 实操：建项目、案例属性、三级编码、查询与可视化、AI 辅助慎用
+- `references/12-case-library.md` — 四类真实案例（访谈扎根/政策文本/小红书网络文本/课堂多模态）的完整研究骨架
+- `references/13-faq-pitfalls.md` — 新手十大错误、答辩高频问题应答、范式—方法—质量标准自洽性自检
 
 流程图与可视化：
 
@@ -42,7 +51,14 @@ license: MIT
 
 模板与工具：
 
-- `templates/` — 访谈提纲、编码簿、COREQ 自检表、知情同意书等可直接套用的模板
+- `templates/interview-guide-template.md` — 半结构访谈提纲
+- `templates/focus-group-guide-template.md` — 焦点小组讨论提纲（含互动激发设计）
+- `templates/codebook-template.md` — 编码簿
+- `templates/three-level-coding-table-template.md` — 扎根理论三级编码汇总表（三线表）
+- `templates/network-text-collection-log-template.md` — 网络文本采集登记表（含合规自查）
+- `templates/research-design-onepager-template.md` — 研究设计一页纸（范式—方法—质量标准自洽）
+- `templates/coreq-checklist.md` — COREQ 32 项自检表
+- `templates/consent-form-template.md` — 知情同意书
 - `tools/kappa-calculator/index.html` — 离线 Kappa 一致性系数计算器，双击即用，无需联网
 
 ## 核心工作原则（贯穿所有阶段）
@@ -62,7 +78,11 @@ license: MIT
 - "审稿人要我报编码一致性 / 算 Kappa" → 读 `06`，先确认范式是否真需要，再用 `tools/kappa-calculator`
 - "怎么判断访谈够了 / 饱和了没" → 读 `06` 理论饱和部分，给判定标准而非拍数字
 - "投稿要 COREQ" → 读 `07`，用 `templates/coreq-checklist.md` 逐项自检
-- "用 NVivo 怎么做编码比较" → 读 `06` 的 NVivo 实操部分
+- "用 NVivo 怎么做编码比较 / 矩阵查询" → 读 `06` 与 `11` 的 NVivo 实操部分
+- "做政策文本分析 / 政策工具" → 读 `08`，搭"政策工具×主题"二维编码框架
+- "采集小红书/微博文本怎么做、合规吗" → 读 `09`，用 `templates/network-text-collection-log-template.md`
+- "我有问卷又有访谈 / 混合方法" → 读 `10`，并联用 questionnaire-analysis skill
+- "答辩怕被问 / 老师说我方法不严谨" → 读 `13` 做范式—方法—质量标准自洽性自检
 
 ## 语言
 
