@@ -12,6 +12,8 @@
 
 > 给读研做访谈、编码、算 Kappa、被审稿人追着要 COREQ 的你。把"一项严谨的质性研究该怎么做"沉淀成一个 AI 能直接调用的技能包——少翻一次书，少踩一个坑。
 
+> 📘 **想要一份图文版的系统手册？** 这套技能的精华被整理成了 32 页的《NVivo Qualitative Research Field Guide》——含 12 张图解、10 个即用模板、三级编码与 Kappa 实操全流程：[在 Gumroad 获取](https://maydeng.gumroad.com/l/nvivo-qualitative-guide)。（本仓库始终免费开源；手册是可选的延伸阅读。）
+
 ---
 
 ## 📑 目录

@@ -12,6 +12,8 @@
 
 > For the grad student running interviews, coding transcripts, computing Kappa, and getting chased by reviewers for COREQ. It distills "how to do a rigorous qualitative study" into a skill pack an AI can call directly — one less trip to the methods textbook, one less pitfall.
 
+> 📘 **Want an illustrated, step-by-step handbook?** The essentials are packaged into the 32-page **NVivo Qualitative Research Field Guide** — 12 diagrams, 10 ready-to-use templates, and full walkthroughs of three-level coding and Kappa reliability: [get it on Gumroad](https://maydeng.gumroad.com/l/nvivo-qualitative-guide). (This repo stays free and open-source; the handbook is optional further reading.)
+
 ---
 
 ## 📑 Table of Contents
